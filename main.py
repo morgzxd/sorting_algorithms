@@ -28,6 +28,37 @@ def insertion_sort(mylist):
       while j > 0 and mylist[j] < mylist[j-1]:
         swap(mylist, j, j-1)
         j -= 1
+        
+def merge(A, B):
+  C = []
+  while len(A) > 0 and len(B) > 0:
+    if A[0] >= B[0]:
+      C.append(B[0])
+      del B[0]
+
+    elif B[0] > A[0]:
+      C.append(A[0])
+      del A[0]
+
+  if len(A) == 0:
+    C += B
+    
+  if len(B) == 0:
+    C += A
+    
+
+  return C
+
+def merge_sort(mylist):
+  if len(mylist) == 1:
+    return mylist
+  
+  x = len(mylist)
+  A = mylist[:x//2]
+  B = mylist[x//2:]
+  
+  sorted_list = merge(merge_sort(A), merge_sort(B))
+  return sorted_list
       
 def scramble(mylist, n):
   list_len = len(mylist)
@@ -78,7 +109,7 @@ def test_algorithm(sort_func, out_file_name, n_trials=5, n_scramble=5, start=20,
       
       
 def main():
- test_algorithm(insertion_sort, ".insert_sort_test.csv")
+ test_algorithm(merge_sort, ".merge_sort_test.csv")
 
 if __name__ == '__main__':
   main()
